@@ -3,50 +3,50 @@
     "image": "https://img.freepik.com/foto-gratis/nomada-digital-trabajando-su-computadora-portatil-al-aire-libre-playa-al-atardecer-vista-trasera_535168-1068.jpg",
     "questions": [
         {
-            "text": "Question1",
-            "image": "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
-            "lifetimeSeconds": 10,
+            "text": "Which of the following remote locations allow for telecommuting?",
+            "image": "https://www.ravepubs.com/wp-content/uploads/2022/01/7-Insights-into-the-Future-of-Remote-Work.jpg",
+            "lifetimeSeconds": 8000,
             "options": [
                 {
-                    "text": "Opt1"
+                    "text": "Home"
                 },
                 {
-                    "text": "Opt2"
+                    "text": "Coffee Shop"
                 },
                 {
-                    "text": "Opt"
+                    "text": "All are correct"
                 }
             ]
         },
         {
-            "text": "Question2",
-            "image": "https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg",
-            "lifetimeSeconds": 5,
+            "text": "Some technologies that you need to telecommute include the following except",
+            "image": "https://www.bu.edu/hr/files/2021/07/Remote-work-homepage-scaled.jpg",
+            "lifetimeSeconds": 9000,
             "options": [
                 {
-                    "text": "Opt1"
+                    "text": "Phone"
                 },
                 {
-                    "text": "Opt2"
+                    "text": "Internet"
                 },
                 {
-                    "text": "Opt"
+                    "text": "Copier"
                 }
             ]
         },
         {
-            "text": "Pregunta 2",
-            "image": "https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg",
-            "lifetimeSeconds": 5,
+            "text": "Most telecommuters work in the following industries except",
+            "image": "https://cdn-public-assets.join.com/2021/09/6500a9e3-remote-vs-hybrid-working.jpg",
+            "lifetimeSeconds": 7000,
             "options": [
                 {
-                    "text": "Opt1"
+                    "text": "Financial Industry"
                 },
                 {
-                    "text": "Opt2"
+                    "text": "Nursing Industry"
                 },
                 {
-                    "text": "Opt"
+                    "text": "Communications Industry"
                 }
             ]
         }

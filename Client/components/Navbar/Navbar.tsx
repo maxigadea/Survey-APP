@@ -8,14 +8,14 @@ import "antd/dist/antd.css";
 import { observer } from 'mobx-react-lite';
 
 interface ComponentProps {
-  stateStore: stateStore
+  stateStore: typeof stateStore
 }
 
 export const NavBar: React.FC<ComponentProps> = observer(({ stateStore }) => {
 
   useEffect(() => {
     stateStore.checkChaindId();
-  }, [stateStore.user])
+  }, [stateStore.user.address])
 
   return (
     <nav className={Styles.menuBar}>

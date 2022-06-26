@@ -1,10 +1,17 @@
-import { makeObservable, observable, action, values, runInAction } from 'mobx';
+import { makeAutoObservable, observable, action, values, runInAction } from 'mobx';
 import { contractABI, contractAddress } from '../utils/constants';
 import { ethers } from 'ethers';
 
 
 interface Users {
     name: string
+    address: string
+    balance: number
+    ropsten: boolean
+}
+
+interface Survey {
+    currentQuestion: number
     address: string
     balance: number
     ropsten: boolean
@@ -19,9 +26,14 @@ class StateStoreIMPL {
         ropsten: false
     };
 
+    currentSurvey: number =  0;
+    surveyFinished: boolean = false;
+    restTime: number = 0;
+
     constructor() {
-        makeObservable(this, {
+        makeAutoObservable(this, {
             user: observable,
+            currentSurvey: observable,
             addUser: action,
             checkChaindId: action,
             connectWallet: action,
@@ -29,6 +41,23 @@ class StateStoreIMPL {
             getEthereumContract: action,
             getBalance: action,
         });
+    }
+    setSurveyCount = () => {
+        this.currentSurvey ++;
+    }
+
+    setSurveyFinished = () => {
+        this.surveyFinished = true;
+    }
+
+    setRestTime = () => {
+        this.restTime = -1000;
+    }
+
+    finishAnswer = () => {
+        debugger
+        this.surveyFinished = false;
+        console.log(this.surveyFinished)
     }
 
     //actions, functions that can be change the state
@@ -80,8 +109,6 @@ class StateStoreIMPL {
             if (!metamask) return alert('Please install metamask')
             const accounts = await metamask.request({ method: 'eth_requestAccounts' })
             stateStore.addUser(accounts[0])
-            window.location.href = '/quizz'
-            console.log(values(stateStore.user))
         } catch (error) {
             console.error(error);
             throw new Error('No ethereum object. ')
@@ -103,7 +130,6 @@ class StateStoreIMPL {
                 contractABI,
                 signer
             )
-            debugger
             return transactionContract;
         } catch (error) {
             console.error(error);
@@ -118,7 +144,25 @@ class StateStoreIMPL {
         if (response) {
             this.user.balance = Number(response);
         }
-    }
+    };
+
+    checkisconnected = async () => {
+        const response = await window.ethereum.request({ method: 'eth_accounts' })
+        debugger
+        if (response.length > 0) {
+            return response;
+        } else {
+            runInAction(() => {
+                this.user = {
+                    name: '',
+                    address: '',
+                    balance: 0,
+                    ropsten: false
+                }
+            })
+        }
+
+    };
 
 }
 
