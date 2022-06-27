@@ -17,7 +17,6 @@ export const NavBar: React.FC<ComponentProps> = observer(({ stateStore }) => {
     stateStore.checkChaindId();
   }, [stateStore.user.address, stateStore.user.ropsten])
 
-  console.log(stateStore.user.address, stateStore.user.ropsten)
 
   if (stateStore.user.address && stateStore.user.ropsten) {
     return (

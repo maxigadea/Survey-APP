@@ -44,8 +44,7 @@ const QuizMain: React.FC<ComponentProps> = observer(({ stateStore }) => {
 
   const handleSend = (e) => {
     e.preventDefault();
-    var surveyIds = Object.keys(answers);
-    stateStore.finishAnswer(answers, surveyIds)
+    stateStore.finishAnswer(answers)
   };
 
   return (

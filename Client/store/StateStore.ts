@@ -12,10 +12,6 @@ interface Users {
     ropsten: boolean
 }
 
-interface Answer {
-    surveyResponse: string
-    surveyId: number
-}
 
 class StateStoreIMPL {
 
@@ -27,8 +23,8 @@ class StateStoreIMPL {
         ropsten: false
     };
 
-    answers: Answer[] = []
-    surveyIds: [] = []
+    answers: string[] = []
+    surveyIds: string[] = []
 
     surveyId: number = 1;
     currentSurvey: number = 0;
@@ -57,14 +53,14 @@ class StateStoreIMPL {
 
     }
 
-    finishAnswer = (Answers: Answer[], surveyIds: []) => {
+    finishAnswer = (Answers: []) => {
         this.surveyFinished = true;
         if (Answers) {
             this.answers = Answers;
-            this.surveyIds = surveyIds;
+            this.surveyIds = Object.keys(Answers);;
+        } else {
+            this.answers.push("Not answered")
         }
-        console.log('estas son', values(this.surveyIds))
-
     }
 
     //actions, functions that can be change the state
@@ -153,7 +149,7 @@ class StateStoreIMPL {
     };
 
     validateAnswers = async () => {
-        const answerIds = values(this.surveyIds).map(value => {return Number(value)});
+        const answerIds = values(this.surveyIds).map(value => { return Number(value) });
         console.log(answerIds);
         const transactionContract = this.getEthereumContract();
         const transactionHash = await transactionContract.submit(this.surveyId, answerIds);
