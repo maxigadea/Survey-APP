@@ -15,7 +15,37 @@ export const NavBar: React.FC<ComponentProps> = observer(({ stateStore }) => {
 
   useEffect(() => {
     stateStore.checkChaindId();
-  }, [stateStore.user.address])
+  }, [stateStore.user.address, stateStore.user.ropsten])
+
+  console.log(stateStore.user.address, stateStore.user.ropsten)
+
+  if (stateStore.user.address && stateStore.user.ropsten) {
+    return (
+      <nav className={Styles.menuBar}>
+        <div className={Styles.logo}>
+          <Image width={50} height={50} src={EthLogo} alt='Logo' />
+        </div>
+        <div className={Styles.menuCon}>
+          <p>Balance: $QUIZ {stateStore.user.balance}</p>
+        </div>
+      </nav>
+    )
+  }
+
+  if (stateStore.user.address && !stateStore.user.ropsten) {
+    return (
+      <nav className={Styles.menuBar}>
+        <div className={Styles.logo}>
+          <Image width={50} height={50} src={EthLogo} alt='Logo' />
+        </div>
+        <div className={Styles.menuCon}>
+          <Button type="primary" onClick={stateStore.switchNetwork}>
+            <span >  {'Change network'} </span>
+          </Button>
+        </div>
+      </nav>
+    )
+  }
 
   return (
     <nav className={Styles.menuBar}>
@@ -29,4 +59,5 @@ export const NavBar: React.FC<ComponentProps> = observer(({ stateStore }) => {
       </div>
     </nav>
   )
+
 });

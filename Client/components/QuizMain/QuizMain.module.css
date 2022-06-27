@@ -2,7 +2,7 @@
     display: flex;
     padding: 24px !important;
     margin: 10px;
-    background: #2426257f;
+    background: #8585857f;
     align-items: center;
     flex-direction: row;
 }
@@ -10,7 +10,7 @@
 .label {
     display: flex;
     font-family: 'Anek Latin', sans-serif;
-    font-size: 40px;
+    font-size: 30px!important;
     justify-content: center;
     color: #1289f9 !important;
     margin: auto;
@@ -47,10 +47,13 @@
 
 .menuCon {
     display: flex;
-    width: calc(100% - 150px);
     flex-direction: row-reverse;
     margin: 10px 0 10px 0;
-  }
+}
+
+.span {
+    margin: auto;
+}
 
 @media (max-width: 767px) {
     .title {

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import {NavBar} from '../../components/Navbar/Navbar';
-import QuizMain from '../../components/QuizMain/QuizMain';
+import QuizContainer from '../../components/QuizMain/QuizContainer';
 import { stateStore } from '../../store/StateStore';
 
 
@@ -9,7 +9,7 @@ const Quiz: NextPage = () => {
   return (
     <>
       <NavBar stateStore={stateStore} />
-      <QuizMain  stateStore={stateStore}/>
+      <QuizContainer  stateStore={stateStore}/>
     </>
   )
 }

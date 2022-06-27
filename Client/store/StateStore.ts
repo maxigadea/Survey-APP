@@ -3,30 +3,35 @@ import { contractABI, contractAddress } from '../utils/constants';
 import { ethers } from 'ethers';
 
 
+
 interface Users {
+    id: number
     name: string
     address: string
     balance: number
     ropsten: boolean
 }
 
-interface Survey {
-    currentQuestion: number
-    address: string
-    balance: number
-    ropsten: boolean
+interface Answer {
+    surveyResponse: string
+    surveyId: number
 }
 
 class StateStoreIMPL {
 
     user: Users = {
+        id: 0,
         name: "",
         address: "",
         balance: 0,
         ropsten: false
     };
 
-    currentSurvey: number =  0;
+    answers: Answer[] = []
+    surveyIds: [] = []
+
+    surveyId: number = 1;
+    currentSurvey: number = 0;
     surveyFinished: boolean = false;
     restTime: number = 0;
 
@@ -40,29 +45,32 @@ class StateStoreIMPL {
             switchNetwork: action,
             getEthereumContract: action,
             getBalance: action,
+            setSurveyFinished: action
         });
     }
     setSurveyCount = () => {
-        this.currentSurvey ++;
+        this.currentSurvey++;
     }
 
     setSurveyFinished = () => {
         this.surveyFinished = true;
+
     }
 
-    setRestTime = () => {
-        this.restTime = -1000;
-    }
+    finishAnswer = (Answers: Answer[], surveyIds: []) => {
+        this.surveyFinished = true;
+        if (Answers) {
+            this.answers = Answers;
+            this.surveyIds = surveyIds;
+        }
+        console.log('estas son', values(this.surveyIds))
 
-    finishAnswer = () => {
-        debugger
-        this.surveyFinished = false;
-        console.log(this.surveyFinished)
     }
 
     //actions, functions that can be change the state
     addUser = (address: string) => {
         this.user = {
+            id: Number(address),
             name: "current",
             address,
             balance: 0,
@@ -83,7 +91,7 @@ class StateStoreIMPL {
                 })
             } else {
                 runInAction(() => {
-                    return this.user.ropsten = false;
+                    this.user.ropsten = false;
                 })
             };
         };
@@ -95,8 +103,6 @@ class StateStoreIMPL {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: targetNetworkId }],
         });
-        // refresh
-        window.location.reload();
     };
 
     connectWallet = async () => {
@@ -146,14 +152,24 @@ class StateStoreIMPL {
         }
     };
 
+    validateAnswers = async () => {
+        const answerIds = values(this.surveyIds).map(value => {return Number(value)});
+        console.log(answerIds);
+        const transactionContract = this.getEthereumContract();
+        const transactionHash = await transactionContract.submit(this.surveyId, answerIds);
+        this.getBalance();
+        window.location.href = '/';
+        console.log(transactionHash);
+    }
+
     checkisconnected = async () => {
         const response = await window.ethereum.request({ method: 'eth_accounts' })
-        debugger
         if (response.length > 0) {
             return response;
         } else {
             runInAction(() => {
                 this.user = {
+                    id: 0,
                     name: '',
                     address: '',
                     balance: 0,
@@ -161,7 +177,6 @@ class StateStoreIMPL {
                 }
             })
         }
-
     };
 
 }
