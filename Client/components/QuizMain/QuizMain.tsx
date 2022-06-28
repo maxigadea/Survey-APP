@@ -40,7 +40,6 @@ const QuizMain: React.FC<ComponentProps> = observer(({ stateStore }) => {
       [e.target.name]: e.target.value
     });
   };
-  console.log(answers);
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -60,7 +59,7 @@ const QuizMain: React.FC<ComponentProps> = observer(({ stateStore }) => {
                 return (
                   <div key={i} className={Styles.divContainer}>
                     <label className={Styles.label}>{option.text}</label>
-                    <input id="checkboxOne" name={`${i}`} onChange={handleChanges} type="checkbox" value={option.text} />
+                    <input id="checkboxOne" name={`${stateStore.currentSurvey}-${i}`} onChange={handleChanges} type="checkbox" value={option.text} />
                   </div>)
               })
             }

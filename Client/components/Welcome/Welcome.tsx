@@ -23,9 +23,9 @@ export const Welcome: React.FC<ComponentProps> = observer(({ stateStore }) => {
 
     useEffect(() => {
         stateStore.checkisconnected();
+        stateStore.getBalance();
     }, []);
 
-    console.log(stateStore.user.address)
 
     return (
         <Layout>

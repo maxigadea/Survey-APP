@@ -8,6 +8,12 @@
   box-shadow: 0 8px 0 rgb(0 0 0 / 5%);
 }
 
+.menuCon {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 10px 0 10px 0;
+}
+
 .img {
   display: flex;
   margin: auto;

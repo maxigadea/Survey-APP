@@ -41,7 +41,8 @@ class StateStoreIMPL {
             switchNetwork: action,
             getEthereumContract: action,
             getBalance: action,
-            setSurveyFinished: action
+            setSurveyFinished: action,
+            finishAnswer: action,
         });
     }
     setSurveyCount = () => {
@@ -50,14 +51,15 @@ class StateStoreIMPL {
 
     setSurveyFinished = () => {
         this.surveyFinished = true;
-
+        this.currentSurvey = 0;
     }
 
     finishAnswer = (Answers: []) => {
         this.surveyFinished = true;
         if (Answers) {
             this.answers = Answers;
-            this.surveyIds = Object.keys(Answers);;
+            var aIds = Object.keys(Answers).map((el) => { return el[2] });
+            this.surveyIds = aIds;
         } else {
             this.answers.push("Not answered")
         }
@@ -80,7 +82,6 @@ class StateStoreIMPL {
             const currentChainId = await window.ethereum.request({
                 method: 'eth_chainId',
             });
-
             if (currentChainId == targetNetworkId) {
                 runInAction(() => {
                     this.user.ropsten = true;
@@ -99,6 +100,7 @@ class StateStoreIMPL {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: targetNetworkId }],
         });
+        window.location.reload();
     };
 
     connectWallet = async () => {
@@ -140,22 +142,28 @@ class StateStoreIMPL {
     };
 
     getBalance = async () => {
-        const transactionContract = this.getEthereumContract();
-        const transactionHash = await transactionContract.balanceOf(stateStore.user.address);
-        const response = ethers.utils.formatEther(transactionHash)
-        if (response) {
-            this.user.balance = Number(response);
+        if (this.user.address) {
+            const transactionContract = this.getEthereumContract();
+            const transactionHash = await transactionContract.balanceOf(stateStore.user.address);
+            const response = ethers.utils.formatEther(transactionHash)
+            if (response) {
+                this.user.balance = Number(response);
+            }
         }
     };
 
     validateAnswers = async () => {
-        const answerIds = values(this.surveyIds).map(value => { return Number(value) });
-        console.log(answerIds);
-        const transactionContract = this.getEthereumContract();
-        const transactionHash = await transactionContract.submit(this.surveyId, answerIds);
-        this.getBalance();
-        window.location.href = '/';
-        console.log(transactionHash);
+        try {
+            const answerIds = values(this.surveyIds).map(value => { return Number(value) });
+            const transactionContract = this.getEthereumContract();
+            const transactionHash = await transactionContract.submit(this.surveyId, answerIds);
+            await transactionHash.wait();
+            this.getBalance();
+            window.location.href = '/';
+        } catch (error) {
+            console.error(error);
+        }
+
     }
 
     checkisconnected = async () => {

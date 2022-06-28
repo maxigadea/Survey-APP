@@ -15,6 +15,7 @@ export const NavBar: React.FC<ComponentProps> = observer(({ stateStore }) => {
 
   useEffect(() => {
     stateStore.checkChaindId();
+    stateStore.getBalance();
   }, [stateStore.user.address, stateStore.user.ropsten])
 
 
@@ -25,7 +26,7 @@ export const NavBar: React.FC<ComponentProps> = observer(({ stateStore }) => {
           <Image width={50} height={50} src={EthLogo} alt='Logo' />
         </div>
         <div className={Styles.menuCon}>
-          <p>Balance: $QUIZ {stateStore.user.balance}</p>
+          <span className={Styles.SpanBalance}>Balance: {stateStore.user.balance} $QUIZ</span>
         </div>
       </nav>
     )

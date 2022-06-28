@@ -2,17 +2,23 @@
     display: flex;
     padding: 24px !important;
     margin: 10px;
-    background: #8585857f;
+    background-color: #797ef6;
     align-items: center;
     flex-direction: row;
 }
 
 .label {
     display: flex;
-    font-family: 'Anek Latin', sans-serif;
-    font-size: 30px!important;
+    font-family: Gotham;
+    font-size: 24px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #fff;
     justify-content: center;
-    color: #1289f9 !important;
     margin: auto;
     border-color: #eceff2;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -42,7 +48,7 @@
     display: flex;
     width: 300px;
     margin: auto;
-    
+
 }
 
 .menuCon {

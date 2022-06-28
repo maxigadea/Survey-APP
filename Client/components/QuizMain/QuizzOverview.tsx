@@ -11,11 +11,9 @@ import { values } from 'mobx';
 interface ComponentProps {
     stateStore: typeof stateStore
 }
-
 const Content = Layout;
 
 const QuizOverview: React.FC<ComponentProps> = observer(({ stateStore }) => {
-    console.log(values(stateStore.answers))
     return (
         <>
             <Layout>
@@ -23,9 +21,9 @@ const QuizOverview: React.FC<ComponentProps> = observer(({ stateStore }) => {
                 <Image className={Styles.img} width={300} height={400} src={Survey.image} alt='Logo' priority={true} />
                 <Content>
                     {
-                       values(stateStore.answers).map((answ) => {
+                        values(stateStore.answers).map((answ, i) => {
                             return (
-                                <div className={Styles.divContainer}>
+                                <div key={i} className={Styles.divContainer}>
                                     <label className={Styles.label}>{answ}</label>
                                 </div>
                             )
