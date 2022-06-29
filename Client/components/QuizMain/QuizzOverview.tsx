@@ -21,7 +21,7 @@ const QuizOverview: React.FC<ComponentProps> = observer(({ stateStore }) => {
                 <Image className={Styles.img} width={300} height={400} src={Survey.image} alt='Logo' priority={true} />
                 <Content>
                     {
-                        values(stateStore.answers).map((answ, i) => {
+                        stateStore.answers.map((answ: string, i: number) => {
                             return (
                                 <div key={i} className={Styles.divContainer}>
                                     <label className={Styles.label}>{answ}</label>

@@ -3,7 +3,6 @@ import { contractABI, contractAddress } from '../utils/constants';
 import { ethers } from 'ethers';
 
 
-
 interface Users {
     id: number
     name: string
@@ -12,6 +11,11 @@ interface Users {
     ropsten: boolean
 }
 
+declare global {
+  interface Window{
+    ethereum?:any
+  }
+}
 
 class StateStoreIMPL {
 
@@ -23,7 +27,7 @@ class StateStoreIMPL {
         ropsten: false
     };
 
-    answers: string[] = []
+    answers: any
     surveyIds: string[] = []
 
     surveyId: number = 1;
@@ -54,10 +58,10 @@ class StateStoreIMPL {
         this.currentSurvey = 0;
     }
 
-    finishAnswer = (Answers: []) => {
+    finishAnswer = (Answers: Object) => {
         this.surveyFinished = true;
         if (Answers) {
-            this.answers = Answers;
+            this.answers = Object.values(Answers);
             var aIds = Object.keys(Answers).map((el) => { return el[2] });
             this.surveyIds = aIds;
         } else {
@@ -144,7 +148,7 @@ class StateStoreIMPL {
     getBalance = async () => {
         if (this.user.address) {
             const transactionContract = this.getEthereumContract();
-            const transactionHash = await transactionContract.balanceOf(stateStore.user.address);
+            const transactionHash = await transactionContract?.balanceOf(stateStore.user.address);
             const response = ethers.utils.formatEther(transactionHash)
             if (response) {
                 this.user.balance = Number(response);
@@ -156,7 +160,7 @@ class StateStoreIMPL {
         try {
             const answerIds = values(this.surveyIds).map(value => { return Number(value) });
             const transactionContract = this.getEthereumContract();
-            const transactionHash = await transactionContract.submit(this.surveyId, answerIds);
+            const transactionHash = await transactionContract?.submit(this.surveyId, answerIds);
             await transactionHash.wait();
             this.getBalance();
             window.location.href = '/';

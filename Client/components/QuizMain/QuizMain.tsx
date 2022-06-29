@@ -15,7 +15,7 @@ const Content = Layout;
 
 const QuizMain: React.FC<ComponentProps> = observer(({ stateStore }) => {
 
-  const [answers, setAnswers] = useState();
+  const [answers, setAnswers] = useState({});
 
   var restTime = Survey.questions[stateStore.currentSurvey].lifetimeSeconds;
   useEffect(() => {
@@ -24,7 +24,7 @@ const QuizMain: React.FC<ComponentProps> = observer(({ stateStore }) => {
       if (stateStore.restTime === 0) {
         if (stateStore.currentSurvey < Survey.questions.length - 1) {
           stateStore.setSurveyCount()
-          document.querySelectorAll('input[type=checkbox]').forEach(function (checkElement) {
+          document.querySelectorAll('input[type=checkbox]').forEach(function (checkElement: any ) {
             checkElement.checked = false;
           });
         }
@@ -34,14 +34,14 @@ const QuizMain: React.FC<ComponentProps> = observer(({ stateStore }) => {
   }, [restTime]);
 
 
-  const handleChanges = (e) => {
+  const handleChanges = (e: any) => {
     setAnswers({
       ...answers,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSend = (e) => {
+  const handleSend = (e : any) => {
     e.preventDefault();
     stateStore.finishAnswer(answers)
   };
