@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from "antd";
-import Styles from './Navbar.module.css';
+import Styles from './NavBar.module.css';
 import EthLogo from '../../Assets/eth-logo.png';
 import { stateStore } from "../../store/StateStore";
 import "antd/dist/antd.css";
